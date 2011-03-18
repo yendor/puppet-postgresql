@@ -66,4 +66,13 @@ class postgresql::debian::v8-3 inherits postgresql::debian::base {
       fail "postgresql 8.3 not available for ${operatingsystem}/${lsbdistcodename}"
     }
   }
+
+  file { "/etc/postgresql/8.3/main/postgresql.conf":
+	ensure  => present,
+	content => template('postgresql/postgresql.8.3.conf.erb'),
+	mode    => 0644,
+	owner   => postgres,
+	group   => postgres,
+	require => Package["postgresql"],
+  }
 }
